@@ -2,14 +2,6 @@ import { Node, mergeAttributes } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import AIBlockComponent from "./component";
 
-declare module "@tiptap/core" {
-  interface Commands<ReturnType> {
-    aiBlock: {
-      setAIBlock: (attrs?: { selectedText?: string }) => ReturnType;
-    };
-  }
-}
-
 export const AIBlock = Node.create({
   name: "aiBlock",
 
@@ -47,19 +39,6 @@ export const AIBlock = Node.create({
       mergeAttributes(HTMLAttributes, { "data-type": "ai-block" }),
       0,
     ];
-  },
-
-  addCommands() {
-    return {
-      setAIBlock:
-        (attrs) =>
-        ({ commands }) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs,
-          });
-        },
-    };
   },
 
   addNodeView() {
