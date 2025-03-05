@@ -14,8 +14,8 @@ import { Check, PenLine, Wand2, X } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { generateTextGemini } from "./gemini";
-import MarkdownIt from "markdown-it"; // parse markdown content markdown -> html to properly render markdown content
-import Markdown from "react-markdown"; // render markdown content in AIResponse component
+import MarkdownIt from "markdown-it";
+import Markdown from "react-markdown";
 
 const API_KEY_LOCAL_STORAGE_KEY = "ai-block-api-key";
 
@@ -50,7 +50,7 @@ export default function AIBlockComponent({ node }: NodeViewRendererProps) {
     setError(null);
     setIsGenerating(true);
 
-    localStorage.setItem(API_KEY_LOCAL_STORAGE_KEY, apiKey); // save api key to local storage for later
+    localStorage.setItem(API_KEY_LOCAL_STORAGE_KEY, apiKey);
 
     try {
       const generated = await generateTextGemini({
@@ -64,7 +64,7 @@ export default function AIBlockComponent({ node }: NodeViewRendererProps) {
         prompt: prompt,
       });
 
-      setIsEditing(false); // this will go to next screen
+      setIsEditing(false);
     } catch (error) {
       console.error("Error generating response:", error);
       setError(`Error generating response: ${(error as Error).message}`);
@@ -78,7 +78,7 @@ export default function AIBlockComponent({ node }: NodeViewRendererProps) {
 
     const markdownParser = new MarkdownIt();
 
-    const htmlContent = markdownParser.render(response); // will properly render markdown content
+    const htmlContent = markdownParser.render(response);
 
     editor.chain().focus().insertContent(htmlContent).run();
 
